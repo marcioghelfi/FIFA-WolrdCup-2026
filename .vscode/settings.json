@@ -1,0 +1,11 @@
+{
+  // Live Server configuration
+  // Extension: ritwickdey.liveserver
+  "liveServer.settings.port": 5500,
+  "liveServer.settings.root": "/",
+  "liveServer.settings.file": "index.html",
+  "liveServer.settings.openBrowser": true,
+  "liveServer.settings.browser": "default",
+  "liveServer.settings.donotShowInfoMsg": true,
+  "liveServer.settings.donotVerifyTags": false
+}

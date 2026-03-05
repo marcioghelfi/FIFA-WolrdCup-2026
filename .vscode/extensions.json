@@ -1,0 +1,6 @@
+{
+  "recommendations": [
+    // Live Server — serves the app locally so fetch() works correctly
+    "ritwickdey.liveserver"
+  ]
+}
