@@ -26,17 +26,27 @@
 
       <!-- Tab navigation -->
       <nav class="main-nav" role="tablist" aria-label="Main navigation">
-        <!--
-          data-tab must match the data-section attribute on each <section>.
-          The default active tab is "schedule".
-        -->
         <button class="nav-btn" data-tab="teams" role="tab" aria-selected="false">
           &#x1F6A9; Teams
         </button>
         <button class="nav-btn active" data-tab="schedule" role="tab" aria-selected="true">
           &#x1F4C5; Schedule
         </button>
+        <button class="nav-btn" data-tab="stadiums" role="tab" aria-selected="false">
+          &#x1F3DF; Stadiums
+        </button>
+        <button class="nav-btn" data-tab="groups" role="tab" aria-selected="false">
+          &#x1F4CA; Groups
+        </button>
+        <button class="nav-btn" data-tab="bracket" role="tab" aria-selected="false">
+          &#x1F3C6; Bracket
+        </button>
       </nav>
+
+      <!-- Dark / light mode toggle -->
+      <button class="theme-toggle" id="theme-toggle" aria-label="Toggle light/dark mode" title="Toggle theme">
+        &#x1F319;
+      </button>
 
     </div>
   </header>
@@ -79,6 +89,64 @@
           <span class="stat-label">Days</span>
         </div>
       </div>
+
+      <!-- Countdown to opening match -->
+      <div class="hero-countdown" id="hero-countdown" aria-label="Countdown to opening match">
+        <div class="countdown-label-above">Opening match in</div>
+        <div class="countdown-blocks">
+          <div class="countdown-block">
+            <span class="cd-val" id="cd-days">--</span>
+            <span class="cd-label">Days</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-block">
+            <span class="cd-val" id="cd-hours">--</span>
+            <span class="cd-label">Hrs</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-block">
+            <span class="cd-val" id="cd-mins">--</span>
+            <span class="cd-label">Min</span>
+          </div>
+          <div class="countdown-sep">:</div>
+          <div class="countdown-block">
+            <span class="cd-val" id="cd-secs">--</span>
+            <span class="cd-label">Sec</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Official Mascots -->
+      <div class="hero-mascots" aria-label="Official mascots">
+        <div class="mascot-section-label">&#x1F3C6; Official Mascots</div>
+        <img
+          class="mascot-group-img"
+          src="https://media.cnn.com/api/v1/images/stellar/prod/dgm-048-mascot-png-crops-and-website-pop-up-graphics-v2-with-logo-2-group-1-16x9.png?c=original&q=w_860,c_fill"
+          alt="FIFA World Cup 2026 official mascots — Maple, Zayu and Clutch"
+          loading="lazy"
+        />
+        <div class="mascot-trio">
+          <div class="mascot-item">
+            <span class="mascot-emoji">&#x1F98C;</span>
+            <span class="mascot-name">Maple</span>
+            <span class="mascot-animal">Moose</span>
+            <span class="mascot-host">&#x1F1E8;&#x1F1E6; Canada</span>
+          </div>
+          <div class="mascot-item">
+            <span class="mascot-emoji">&#x1F406;</span>
+            <span class="mascot-name">Zayu</span>
+            <span class="mascot-animal">Jaguar</span>
+            <span class="mascot-host">&#x1F1F2;&#x1F1FD; Mexico</span>
+          </div>
+          <div class="mascot-item">
+            <span class="mascot-emoji">&#x1F985;</span>
+            <span class="mascot-name">Clutch</span>
+            <span class="mascot-animal">Bald Eagle</span>
+            <span class="mascot-host">&#x1F1FA;&#x1F1F8; USA</span>
+          </div>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -104,14 +172,15 @@
           <span class="count-badge" id="teams-count">48</span>
         </h2>
 
-        <!-- Confederation colour legend -->
-        <div class="conf-legend" aria-label="Confederation colour legend">
-          <span class="conf-dot" style="--dot-color:#4a90d9">UEFA</span>
-          <span class="conf-dot" style="--dot-color:#27ae60">CONMEBOL</span>
-          <span class="conf-dot" style="--dot-color:#e74c3c">CONCACAF</span>
-          <span class="conf-dot" style="--dot-color:#f39c12">CAF</span>
-          <span class="conf-dot" style="--dot-color:#9b59b6">AFC</span>
-          <span class="conf-dot" style="--dot-color:#1abc9c">OFC</span>
+        <!-- Confederation filter buttons (also serve as colour legend) -->
+        <div class="conf-legend" role="group" aria-label="Filter by confederation">
+          <button class="conf-dot active" data-conf="all"     style="--dot-color:#596880">All</button>
+          <button class="conf-dot" data-conf="UEFA"     style="--dot-color:#4a90d9">UEFA</button>
+          <button class="conf-dot" data-conf="CONMEBOL" style="--dot-color:#27ae60">CONMEBOL</button>
+          <button class="conf-dot" data-conf="CONCACAF" style="--dot-color:#e74c3c">CONCACAF</button>
+          <button class="conf-dot" data-conf="CAF"      style="--dot-color:#f39c12">CAF</button>
+          <button class="conf-dot" data-conf="AFC"      style="--dot-color:#9b59b6">AFC</button>
+          <button class="conf-dot" data-conf="OFC"      style="--dot-color:#1abc9c">OFC</button>
         </div>
       </div>
 
@@ -140,6 +209,9 @@
           Match Schedule
           <span class="count-badge" id="schedule-count">104</span>
         </h2>
+        <button class="share-btn" id="share-btn" aria-label="Copy share link for current filters" title="Share current filters">
+          &#x1F4CB; Share
+        </button>
       </div>
 
       <!-- ---- Filter Bar ---- -->
@@ -164,6 +236,15 @@
           <label for="filter-group">Group</label>
           <select id="filter-group" aria-label="Filter by group">
             <option value="all">All Groups</option>
+            <!-- Populated dynamically by populateFilters() -->
+          </select>
+        </div>
+
+        <!-- Venue filter -->
+        <div class="filter-group">
+          <label for="filter-stadium">Venue</label>
+          <select id="filter-stadium" aria-label="Filter by venue">
+            <option value="all">All Venues</option>
             <!-- Populated dynamically by populateFilters() -->
           </select>
         </div>
@@ -197,6 +278,16 @@
           />
         </div>
 
+        <!-- Quick: show only favourited matches -->
+        <button class="filter-quick" id="filter-favs" aria-label="Show favourited matches only">
+          &#x2605; Favourites
+        </button>
+
+        <!-- Quick: jump to next match day -->
+        <button class="filter-quick" id="filter-next-day" aria-label="Jump to next upcoming match day">
+          &#x23ED; Next Day
+        </button>
+
         <!-- Reset all filters -->
         <button class="filter-reset" id="filter-reset" aria-label="Reset all filters">
           &#x2715; Reset
@@ -211,6 +302,74 @@
         <!-- Populated by app.js -->
       </div>
 
+    </section>
+
+    <!-- =========================================
+         GROUPS / STANDINGS SECTION
+         Rendered by renderStandings() in app.js
+         ========================================= -->
+    <section
+      class="section"
+      data-section="groups"
+      role="tabpanel"
+      aria-labelledby="tab-groups"
+      id="section-groups"
+    >
+      <div class="section-header">
+        <h2>Group Stage</h2>
+      </div>
+      <p class="standings-note">
+        &#x2139;&#xFE0F; Standings will update as match results become available.
+        The top 2 teams per group (shaded) advance automatically; the 8 best third-place finishers also advance.
+      </p>
+      <div class="standings-grid" id="standings-content">
+        <!-- Populated by renderStandings() in app.js -->
+      </div>
+    </section>
+
+    <!-- =========================================
+         STADIUMS SECTION
+         Rendered by renderStadiums() in app.js
+         ========================================= -->
+    <section
+      class="section"
+      data-section="stadiums"
+      role="tabpanel"
+      aria-labelledby="tab-stadiums"
+      id="section-stadiums"
+    >
+      <div class="section-header">
+        <h2>
+          Venues &amp; Stadiums
+          <span class="count-badge" id="stadiums-count">15</span>
+        </h2>
+      </div>
+      <div class="stadiums-grid" id="stadiums-content" role="list" aria-label="List of stadiums">
+        <!-- Populated by renderStadiums() in app.js -->
+      </div>
+    </section>
+
+    <!-- =========================================
+         KNOCKOUT BRACKET SECTION
+         Rendered by renderBracket() in app.js
+         ========================================= -->
+    <section
+      class="section"
+      data-section="bracket"
+      role="tabpanel"
+      aria-labelledby="tab-bracket"
+      id="section-bracket"
+    >
+      <div class="section-header">
+        <h2>&#x1F3C6; Knockout Bracket</h2>
+      </div>
+      <p class="bracket-note">
+        &#x2139;&#xFE0F; Round of 32 through Final. Teams shown are placeholders until Group Stage is complete.
+        Scroll right to view all rounds.
+      </p>
+      <div id="bracket-content">
+        <!-- Populated by renderBracket() in app.js -->
+      </div>
     </section>
 
   </main>
@@ -230,6 +389,26 @@
        APP SCRIPT
        Must be loaded after the DOM so DOMContentLoaded fires correctly.
        ============================================= -->
+  <!-- =============================================
+       TEAM DETAIL MODAL
+       Populated and shown by openTeamModal() in app.js
+       ============================================= -->
+  <div class="modal-overlay" id="modal-overlay" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-team-name">
+      <button class="modal-close" id="modal-close" aria-label="Close modal">&times;</button>
+      <div class="modal-header" id="modal-header">
+        <!-- Populated by openTeamModal() -->
+      </div>
+      <div class="modal-body" id="modal-body">
+        <!-- Populated by openTeamModal() -->
+      </div>
+      <div class="modal-footer-actions" id="modal-footer-actions">
+        <!-- Populated by openTeamModal() -->
+      </div>
+    </div>
+  </div>
+
+  <script src="data/worldcup2026.js"></script>
   <script src="js/app.js"></script>
 
 </body>
