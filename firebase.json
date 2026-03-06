@@ -8,6 +8,7 @@
       "data/worldcup2026.json",
       "projectplan.md",
       "README.md",
+      "FIREBASE-DEPLOYMENT.md",
       "**/.*"
     ],
     "headers": [
