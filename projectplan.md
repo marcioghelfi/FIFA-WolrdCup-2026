@@ -116,8 +116,8 @@ FIFA-WolrdCup-2026/
 - [x] Inline JS data file (`data/worldcup2026.js`) — enables `file://` usage
 - [x] MST timezone conversion via `toMST()` in `app.js`
 - [x] Dynamic filter population via `populateFilters()`
-- [ ] Verify all 104 match entries are present and accurate
-- [ ] Verify all 48 team entries are present
+- [x] Verify all 104 match entries are present and accurate — done 2026-03-10
+- [x] Verify all 48 team entries — 42 confirmed, 6 TBD (4 UEFA playoffs + 2 IC playoffs, decided Mar 26–31 2026)
 
 ### 4b. Data Layer — Live Scores (Phase 2, due before June 11, 2026)
 - [ ] Sign up for API-Football free key (api-sports.io)
@@ -160,7 +160,9 @@ FIFA-WolrdCup-2026/
 
 ## Known Issues / Tech Debt
 - Project directory has a typo: `FIFA-WolrdCup-2026` (transposed `r` and `l` in "World")
-- Data is mock/illustrative — needs verification against official FIFA schedule when released
+- **Data verified 2026-03-10** against official draw (Dec 5, 2025, Kennedy Center, Washington D.C.). All 42 confirmed teams updated. 6 TBD slots remain (UEFA path A→Group B, B→F, C→D, D→A; IC playoff 1→K, 2→I) — results expected Mar 26–31, 2026.
+- NRG Stadium (Houston) added as stadium #16; total corrected from 15 to 16 venues.
+- Group stage match schedule sourced from official FIFA fixture list. Knockout round dates (R32 July 4–7, R16 July 8–10, QF July 11–12, SF July 15–16) are approximate — confirm against official schedule when released.
 - **Fixed:** Data now loaded via `data/worldcup2026.js` (inline JS variable) so the app works when opened directly via `file://` without a local server. The JSON file is kept as the source of truth.
 - Stadium photos sourced from Wikimedia Commons via `Special:FilePath` redirects — if a filename is wrong, the card silently falls back to the gradient placeholder. Photos should be spot-checked in the browser.
 - Emoji flags do not render on Windows/Chrome (no regional indicator support) — mitigated by using flagcdn.com `<img>` tags with emoji `onerror` fallback.
