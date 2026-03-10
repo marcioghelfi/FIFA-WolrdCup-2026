@@ -177,6 +177,12 @@ FIFA-WolrdCup-2026/
 - [x] Deploy: `firebase deploy --only hosting`
 - [x] Verify site loads at `https://worldcup2026-app.web.app`
 
+> **⚠️ TODO (2026-03-10):** Firebase CLI auth broken on this machine — `firebase` not in PATH and `firebase login` fails. Before next deploy:
+> 1. Confirm Node.js is installed: `node -v`
+> 2. Reinstall CLI: `npm install -g firebase-tools`
+> 3. Re-authenticate: `firebase login`
+> 4. Then deploy updated data: `firebase deploy --only hosting`
+
 ## Deployment Checklist (Phase 2 — Live Scores)
 - [ ] Complete Phase 1 deployment first
 - [ ] Restructure into `public/` + `functions/` folders
